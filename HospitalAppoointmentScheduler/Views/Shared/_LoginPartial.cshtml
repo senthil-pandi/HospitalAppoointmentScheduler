@@ -1,0 +1,37 @@
+﻿@*To check if the user is signed in before displaying Register/Sign in*@
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> signInManager
+
+@if (signInManager.IsSignedIn(User))
+{
+    <form id="logoutForm" method="post" asp-action="Logoff" asp-controller="Account">
+        <ul class="nav navbar-nav">
+            <li class="text-white nav-link">Hello, @User.Identity.Name!</li>
+            <li class="text-white nav-link">
+                <a href="javascript:document.getElementById('logoutForm').submit()">
+                Log Off
+                </a>
+            </li>
+        </ul>
+    </form>
+}
+
+else
+{
+    <ul class="nav navbar-nav">
+        <li class="pr-4">
+            @Html.ActionLink("Sign Up", "Register", "Account", routeValues:null,
+            htmlAttributes: new { id = "registerLink"})
+
+          @*  Alternate for above line[Tag Helper]
+            <a class="nav-item" id="registerLink" asp-controller="Account" asp-action="Register">Register</a>*@        
+        </li>
+
+        
+
+        <li>
+            @Html.ActionLink("Sign In", "Login", "Account", routeValues:null,
+            htmlAttributes: new { id = "loginLink"})
+        </li>
+    </ul>
+}
